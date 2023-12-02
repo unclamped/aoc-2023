@@ -1,7 +1,7 @@
 import { open } from 'node:fs/promises';
 
 (async () => {
-    const file = await open('./input');
+    const file = await open('../input');
 
     let calibrationSum = 0;
   
