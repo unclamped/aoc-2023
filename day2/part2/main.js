@@ -3,7 +3,7 @@ import { open } from 'node:fs/promises';
 (async () => {
     const file = await open('../input');
 
-    let totalIdSum = 0;
+    let totalPowerSum = 0;
     let gamesArray = [];
 
     // parsing the input into an array format we can more easily manipulate
@@ -21,8 +21,6 @@ import { open } from 'node:fs/promises';
       gamesArray.push(lineArray)
     }
 
-    // > 12 red cubes, 13 green cubes, and 14 blue cubes.
-
     /*
         okay so, gamesArray is an array containing each game
         for example, if we wanted to get the first game, we'd have gamesArray[0].
@@ -38,42 +36,31 @@ import { open } from 'node:fs/promises';
     */
 
     for (let g = 0; g < gamesArray.length; g++) {
-        console.log('new game!')
-        let impossible;
-
-        games:
+        let biggestAmount = [0, 0, 0]; // red, green, blue respectively
         for (let h = 0; h < gamesArray[g][1].length; h++) {
             for (let c = 0; c < gamesArray[g][1][h].length; c++) {
                 console.log(gamesArray[g][1][h][c])
                 switch(gamesArray[g][1][h][c][1]) {
-                    case "red":
-                        if (parseInt(gamesArray[g][1][h][c][0]) > 12) {
-                            console.log('impossible');
-                            impossible = true;
-                            break games;
+                    case 'red':
+                        if (parseInt(gamesArray[g][1][h][c][0]) > biggestAmount[0]) {
+                            biggestAmount[0] = parseInt(gamesArray[g][1][h][c][0])
                         }
-                    case "green":
-                        if (parseInt(gamesArray[g][1][h][c][0]) > 13) {
-                            console.log('impossible');
-                            impossible = true;
-                            break games;
+                        break;
+                    case 'green':
+                        if (parseInt(gamesArray[g][1][h][c][0]) > biggestAmount[1]) {
+                            biggestAmount[1] = parseInt(gamesArray[g][1][h][c][0])
                         }
-                    case "blue":
-                        if (parseInt(gamesArray[g][1][h][c][0]) > 14) {
-                            console.log('impossible');
-                            impossible = true;
-                            break games;
+                        break;
+                    case 'blue':
+                        if (parseInt(gamesArray[g][1][h][c][0]) > biggestAmount[2]) {
+                            biggestAmount[2] = parseInt(gamesArray[g][1][h][c][0])
                         }
+                        break;
                 }
             }
-
         }
-        console.log(gamesArray[g][0])
-        if (!impossible) totalIdSum += parseInt(gamesArray[g][0])
+        totalPowerSum += biggestAmount[0] * biggestAmount[1] * biggestAmount[2]
     }
 
-    console.log(totalIdSum)
-
-    // .log doesn't show nested arrays, what the fuck is dir ???????????????
-    //console.dir(gamesArray, {depth: null})
+    console.log(totalPowerSum)
 })();
