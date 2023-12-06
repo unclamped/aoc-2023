@@ -21,7 +21,8 @@ for line in lines:
     for numbers in line:
         while("" in numbers):
             numbers.remove("")
-        numbers = [int(i) for i in numbers]
+    
+    numbers = [int(i) for i in numbers]
     
     #print(line)
 
